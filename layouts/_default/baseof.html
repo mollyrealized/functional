@@ -1,1 +1,47 @@
-
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en" }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
+  <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+  {{ if .Site.Params.favicon }}
+  <link rel="icon" href="{{ .Site.Params.favicon | relURL }}">
+  {{ end }}
+  {{ range .AlternativeOutputFormats }}
+  <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}">
+  {{ end }}
+  {{ partial "head_custom.html" . }}
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <h1 class="site-title">{{ .Site.Title }}</h1>
+      {{ if .Site.Params.description }}
+      <div class="site-description">{{ .Site.Params.description }}</div>
+      {{ end }}
+    </header>
+    
+    <div class="site-navigation">
+      <div class="nav-links">
+        <a href="{{ .Site.BaseURL }}">Home</a>
+        {{ range .Site.Menus.main }}
+        <a href="{{ .URL }}">{{ .Name }}</a>
+        {{ end }}
+      </div>
+      
+      <form action="/search" method="get" class="search-form">
+        <input type="text" name="q" placeholder="Search..." aria-label="Search">
+        <button type="submit">Search</button>
+      </form>
+    </div>
+    
+    {{ block "main" . }}{{ end }}
+    
+    <footer class="site-footer">
+      © {{ now.Format "2006" }} {{ .Site.Params.author | default .Site.Title }} · Powered by <a href="https://micro.blog">Micro.blog</a>
+    </footer>
+  </div>
+  {{ partial "footer_custom.html" . }}
+</body>
+</html>
