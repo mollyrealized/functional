@@ -1,1 +1,39 @@
+name = "Functional LinkBlog"
+description = "A clean, functional theme optimized for linkblogging with data-focused UI"
+license = "MIT"
+min_version = "0.1"
 
+[author]
+  name = "Galaxy Girl Geek"
+  homepage = "https://micro.blog"
+
+[params]
+  # Default settings
+  mainSections = ["post"]
+  description = "Links from around the web"
+  
+  # Theme options that can be changed in the UI
+  [params.config]
+    [params.config.link_color]
+      name = "Link Color"
+      description = "The color of unvisited links"
+      type = "color"
+      default = "#0046ad"
+    
+    [params.config.visited_link]
+      name = "Visited Link Color"
+      description = "The color of visited links"
+      type = "color"
+      default = "#551a8b"
+    
+    [params.config.header_bg]
+      name = "Header Background"
+      description = "Background color for the header and footer"
+      type = "color"
+      default = "#d5d5d5"
+    
+    [params.config.highlight_color]
+      name = "Highlight Color"
+      description = "Color for hovering over links and other highlights"
+      type = "color"
+      default = "#3a6ea5"
