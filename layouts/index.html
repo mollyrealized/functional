@@ -1,1 +1,41 @@
-
+{{ define "main" }}
+<div class="content-area">
+  {{ $paginator := .Paginate (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
+  {{ range $paginator.Pages }}
+    <article>
+      <div class="post-type">{{ if .Params.external_url }}Link{{ else if .Params.quote }}Quote{{ else }}Post{{ end }}</div>
+      <div class="post-content">
+        {{ if .Params.external_url }}
+          {{ if .Content }}
+            {{ .Content }}
+          {{ end }}
+          <a href="{{ .Params.external_url }}">{{ .Title }}</a>
+        {{ else if .Params.quote }}
+          <div class="quote-attribution">
+            {{ if .Params.quote_source_url }}
+              <a href="{{ .Params.quote_source_url }}">{{ .Params.quote_source }}</a>:
+            {{ else if .Params.quote_source }}
+              {{ .Params.quote_source }}:
+            {{ end }}
+          </div>
+          <blockquote>
+            {{ .Params.quote | markdownify }}
+          </blockquote>
+          {{ if .Content }}
+            <div class="quote-commentary">
+              {{ .Content }}
+            </div>
+          {{ end }}
+        {{ else }}
+          {{ .Content }}
+        {{ end }}
+      </div>
+      <div class="post-meta">
+        <a href="{{ .RelPermalink }}" class="permalink" title="Permalink">§</a>
+      </div>
+    </article>
+  {{ end }}
+  
+  {{ template "_internal/pagination.html" . }}
+</div>
+{{ end }}
